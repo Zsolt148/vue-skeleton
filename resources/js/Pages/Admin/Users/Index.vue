@@ -6,7 +6,7 @@
 
         <div>
             <div class="mb-6 flex w-full justify-between items-center">
-                <input class="relative w-full px-4 py-1 rounded-md border-gray-300 mr-2" autocomplete="off" type="text" name="search" placeholder="Keresés…" v-model="params.search"/>
+                <input class="relative w-full px-4 py-1 rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 mr-2" autocomplete="off" type="text" name="search" placeholder="Keresés…" v-model="params.search"/>
                 <jet-button @click="reset">
                     Visszaállítás
                 </jet-button>
@@ -14,7 +14,7 @@
 
             <pagination class="my-5" :links="users.links" />
 
-            <div class="bg-white rounded-md shadow overflow-x-auto">
+            <div class="bg-white dark:bg-gray-700 rounded-md shadow overflow-x-auto">
                 <table class="w-full whitespace-nowrap">
                     <tr class="text-left font-bold">
                         <th class="px-6 pt-6 pb-4">
@@ -46,28 +46,28 @@
                             </span>
                         </th>
                     </tr>
-                    <tr v-for="user in users.data" :key="user.id" class="hover:bg-gray-100 focus-within:bg-gray-100">
-                        <td class="border-t">
+                    <tr v-for="user in users.data" :key="user.id" class="hover:bg-gray-100 dark:hover:bg-gray-800 focus-within:bg-gray-100">
+                        <td class="border-t dark:border-gray-400">
                             <inertia-link class="px-6 py-2 flex items-center focus:text-indigo-500" :href="route('admin:users.edit', user.id)">
                                 {{ user.name }}
                             </inertia-link>
                         </td>
-                        <td class="border-t">
+                        <td class="border-t dark:border-gray-400">
                             <inertia-link class="px-6 py-2 flex items-center" :href="route('admin:users.edit', user.id)" tabindex="-1">
                                 {{ user.email }}
                             </inertia-link>
                         </td>
-                        <td class="border-t">
+                        <td class="border-t dark:border-gray-400">
                             <inertia-link class="px-6 py-2 flex items-center" :href="route('admin:users.edit', user.id)" tabindex="-1">
                                 {{ user.role_val }}
                             </inertia-link>
                         </td>
-                        <td class="border-t">
+                        <td class="border-t dark:border-gray-400">
                             <inertia-link class="px-6 py-2 flex items-center" :href="route('admin:users.edit', user.id)" tabindex="-1">
                                 {{ user.created_at }}
                             </inertia-link>
                         </td>
-                        <td class="border-t w-px">
+                        <td class="border-t w-px dark:border-gray-400">
                             <inertia-link class="px-4 flex items-center" :href="route('admin:users.edit', user.id)" tabindex="-1">
                                 <icon name="cheveron-right" class="block w-6 h-6 fill-gray-400" />
                             </inertia-link>

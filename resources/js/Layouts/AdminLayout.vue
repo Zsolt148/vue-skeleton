@@ -3,21 +3,21 @@
         <div class="md:flex md:flex-col">
             <div class="md:h-screen md:flex md:flex-col">
                 <div class="md:flex md:flex-shrink-0">
-                    <div class="md:flex-shrink-0 md:w-56 px-6 py-4 flex items-center justify-between md:justify-center">
-                        <inertia-link class="text-xl text-blue-600 font-bold" href="/">
-                            Admin
+                    <div class="md:flex-shrink-0 md:w-56 px-6 py-4 flex items-center justify-between md:justify-center bg-white dark:bg-gray-700">
+                        <inertia-link class="text-xl text-blue-500 font-bold" href="/">
+                            Admin panel
                         </inertia-link>
                     </div>
-                    <div class="bg-white border-b w-full p-4 md:py-0 md:px-12 md:text-md flex justify-between items-center">
+                    <div class="bg-white dark:bg-gray-700 border-b border-gray-400 dark:border-gray-500 w-full p-4 md:py-0 md:px-12 md:text-md flex justify-between items-center">
                         <header class="" v-if="$slots.header">
-                            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                            <h2 class="font-semibold text-xl text-gray-800 dark:text-white leading-tight">
                                 <slot name="header"></slot>
                             </h2>
                         </header>
                         <jet-dropdown width="48" align="right">
                             <template #trigger>
                                 <span class="inline-flex rounded-md">
-                                    <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent leading-4 font-medium rounded-md bg-white hover:text-blue-600 focus:outline-none transition">
+                                    <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent leading-4 font-medium rounded-md bg-white dark:bg-gray-700 dark:text-white hover:text-blue-600 dark:text-black focus:outline-none transition">
                                         {{ $page.props.user.name }}
 
                                         <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
@@ -50,8 +50,8 @@
                     </div>
                 </div>
                 <div class="md:flex md:flex-grow md:overflow-hidden">
-                    <admin-menu class="hidden md:block flex-shrink-0 w-56 overflow-y-auto border-r border-t" />
-                    <div class="md:flex-1 sm:px-4 py-8 md:p-4 md:overflow-y-auto bg-gray-100" scroll-region><!-- Page Heading -->
+                    <admin-menu class="hidden bg-white dark:bg-gray-700 md:block flex-shrink-0 w-56 overflow-y-auto border-r border-t dark:border-gray-700" />
+                    <div class="md:flex-1 sm:px-4 py-8 md:p-4 md:overflow-y-auto bg-gray-100 dark:bg-gray-800" scroll-region><!-- Page Heading -->
                         <div class="max-w-7xl mx-auto py-5 sm:px-6 lg:px-8">
                             <flash-messages />
                             <slot />

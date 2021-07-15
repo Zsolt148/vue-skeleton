@@ -66,7 +66,7 @@ class UsersController extends Controller
     {
         $user->update($request->all());
 
-        return redirect()->back()->with('success', 'Felhasználó sikeresn frissítve');
+        return redirect()->back()->with('success', 'Felhasználó sikeresen frissítve');
     }
 
     /**

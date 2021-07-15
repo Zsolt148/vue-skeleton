@@ -9,7 +9,7 @@
                 <span class="text-indigo-400 font-medium">/</span>
                 {{ form.name }}
             </h1>
-            <div class="bg-white rounded-md shadow overflow-hidden">
+            <div class="bg-white dark:bg-gray-700 rounded-md shadow overflow-hidden">
                 <form @submit.prevent="update">
                     <div class="p-8">
                         <div class="space-x-4 flex flex-row">
@@ -27,14 +27,14 @@
 
                             <div class="w-1/3">
                                 <jet-label for="role" value="Típus"/>
-                                <select name="role" id="role" v-model="form.role" class="block mt-1 w-full rounded-md shadow-md border-gray-300 focus:outline-none">
+                                <select name="role" id="role" v-model="form.role" class="block mt-1 w-full rounded-md shadow-md bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-500 focus:outline-none">
                                     <option v-for="(role, key) in roles" :key="key" :value="key">{{role}}</option>
                                 </select>
                                 <jet-input-error :message="form.errors.role" class="mt-2" />
                             </div>
                         </div>
                     </div>
-                    <div class="px-8 py-4 bg-gray-50 border-t border-gray-100 flex items-center justify-between">
+                    <div class="px-8 py-4 bg-gray-50 dark:bg-gray-700 border-t border-gray-100 dark:border-gray-900 flex items-center justify-between">
                         <jet-button>
                             Mentés
                         </jet-button>

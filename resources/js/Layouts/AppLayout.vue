@@ -1,7 +1,7 @@
 <template>
     <div>
-        <div class="min-h-screen bg-gray-100">
-            <nav class="bg-white border-b border-gray-100">
+        <div class="flex flex-col min-h-screen dark:bg-gray-700" :class="route().current('home') ? 'bg-white' : 'bg-gray-100'">
+            <nav class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-500">
                 <!-- Primary Navigation Menu -->
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="flex justify-between sm:justify-center h-16">
@@ -9,7 +9,7 @@
                             <!-- Logo -->
                             <div class="flex-shrink-0 flex items-center">
                                 <inertia-link :href="route('home')">
-                                    <span class="font-bold text-blue-600 text-2xl">mszuosz.hu</span>
+                                    <span class="font-bold text-blue-600 dark:text-blue-500 text-2xl">mszuosz.hu</span>
                                 </inertia-link>
                             </div>
 
@@ -18,6 +18,9 @@
                                 <jet-nav-link :href="route('home')" :active="route().current('home')">
                                     Kezdőlap
                                 </jet-nav-link>
+                                <jet-nav-link href="#" :active="null">
+                                    Teszt
+                                </jet-nav-link>
                             </div>
                         </div>
 
@@ -25,7 +28,7 @@
                             <jet-dropdown width="48" align="right">
                                 <template #trigger>
                                     <span class="inline-flex rounded-md">
-                                        <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent leading-4 font-bold rounded-md bg-white hover:text-blue-600 focus:outline-none transition">
+                                        <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent leading-4 font-bold rounded-md text-gray-800 dark:text-gray-200 bg-white dark:bg-gray-800 hover:text-blue-600 focus:outline-none transition">
                                             Szövetség
 
                                             <svg class="ml-2 -mr-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
@@ -41,10 +44,10 @@
                                         Bemutatkozás
                                     </div>
 
-                                    <jet-dropdown-link :href="route('profile.show')">
+                                    <jet-dropdown-link :href="route('home')">
                                         Történet
                                     </jet-dropdown-link>
-                                    <jet-dropdown-link :href="route('profile.show')">
+                                    <jet-dropdown-link :href="route('home')">
                                         Szervezeti működés
                                     </jet-dropdown-link>
 
@@ -70,21 +73,62 @@
                         <jet-responsive-nav-link :href="route('home')" :active="route().current('home')">
                             Kezdőlap
                         </jet-responsive-nav-link>
+                        <jet-responsive-nav-link :href="route('home')" :active="null">
+                            Kezdőlap
+                        </jet-responsive-nav-link>
                     </div>
                 </div>
             </nav>
 
             <!-- Page Heading -->
-            <header class="bg-white shadow" v-if="$slots.header">
+            <header class="bg-white dark:bg-gray-800 shadow" v-if="$slots.header">
                 <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                     <slot name="header"></slot>
                 </div>
             </header>
 
             <!-- Page Content -->
-            <main>
+            <main class="flex-grow">
                 <slot></slot>
             </main>
+
+            <section :class="route().current('home') ? 'bg-white' : 'bg-gray-100'" class="border-t border-gray-200 dark:border-gray-500 dark:bg-gray-700">
+                <div class="max-w-screen-xl px-4 py-12 mx-auto space-y-8 overflow-hidden sm:px-6 lg:px-8">
+                    <nav class="flex flex-wrap justify-center -mx-5 -my-2">
+                        <div class="px-5 py-2">
+                            <a href="#" class="text-base leading-6 text-gray-500 dark:text-white hover:text-gray-900 dark:hover:text-gray-300">
+                                Impresszum
+                            </a>
+                        </div>
+                        <div class="px-5 py-2">
+                            <a href="#" class="text-base leading-6 text-gray-500 dark:text-white hover:text-gray-900 dark:hover:text-gray-300">
+                                Adatvédelmi Irányelvek
+                            </a>
+                        </div>
+                        <div class="px-5 py-2">
+                            <a href="#" class="text-base leading-6 text-gray-500 dark:text-white hover:text-gray-900 dark:hover:text-gray-300">
+                                Elérhetőség
+                            </a>
+                        </div>
+                    </nav>
+                    <p class="mt-8 text-base leading-6 text-center text-gray-400">
+                        © 2021 MSZUOSZ. All rights reserved.
+                    </p>
+                </div>
+            </section>
+        </div>
+        <div class="fixed bottom-5 right-0 lg:right-4 p-4 bg-white dark:bg-gray-800 border-t-4 border-gray-300 dark:border-gray-500 shadow-lg rounded w-full sm:w-1/2 md:w-1/3 lg:w-1/4" v-if="!cookieAccepted">
+            <h2 class="text-lg lg:text-xl mb-4 block font-bold leading-tight text-gray-700 dark:text-white">Sütik használata</h2>
+            <div class="flex flex-col">
+                <p class="mb-5 font-medium text-gray-600 dark:text-gray-200">
+                    A weboldal sütiket (cookie-kat) használ, hogy biztonságos böngészés mellett a legjobb felhasználói élményt nyújtsa.
+                </p>
+                <button class="w-full px-3 py-1 bg-gray-300 dark:text-white dark:bg-gray-500 hover:bg-blue-500 hover:underline hover:text-white rounded text-gray-700 uppercase tracking-widest text-xs font-bold"
+                        @click.prevent="acceptCookie"
+                >
+                    Elfogadom
+                </button>
+            </div>
         </div>
     </div>
 </template>
@@ -107,9 +151,14 @@
             JetResponsiveNavLink,
         },
 
+        mounted() {
+            this.cookieAccepted = localStorage.getItem('cookie_accepted') == 'true' ? true : false;
+        },
+
         data() {
             return {
                 showingNavigationDropdown: false,
+                cookieAccepted: false,
             }
         },
 
@@ -117,6 +166,10 @@
             logout() {
                 this.$inertia.post(route('logout'));
             },
+            acceptCookie() {
+                localStorage.setItem('cookie_accepted', true);
+                this.cookieAccepted = true;
+            }
         }
     }
 </script>
