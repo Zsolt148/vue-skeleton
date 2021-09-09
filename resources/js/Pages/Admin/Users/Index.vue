@@ -5,12 +5,7 @@
         </template>
 
         <div>
-            <div class="mb-6 flex w-full justify-between items-center">
-                <input class="relative w-full px-4 py-1 rounded-md border-gray-300 dark:border-gray-600 dark:bg-gray-700 mr-2" autocomplete="off" type="text" name="search" placeholder="Keresés…" v-model="params.search"/>
-                <jet-button @click="reset">
-                    Visszaállítás
-                </jet-button>
-            </div>
+            <base-search @search="updateSearch" :search-term="params.search"></base-search>
 
             <pagination class="my-5" :links="users.links" />
 
@@ -18,31 +13,31 @@
                 <table class="w-full whitespace-nowrap">
                     <tr class="text-left font-bold">
                         <th class="px-6 pt-6 pb-4">
-                            <span class="inline-flex w-full justify-between cursor-pointer" @click="sort('name')">
+                            <span class="inline-flex w-full justify-between cursor-pointer" @click="updateSort('name')">
                                 Név
-                                <icon v-if="params.field === 'name' && params.direction === 'asc'" name="cheveron-up" class="w-4 h-4"></icon>
-                                <icon v-if="params.field === 'name' && params.direction === 'desc'" name="cheveron-down" class="w-4 h-4"></icon>
+                                <icon v-if="params.field.value === 'name' && params.direction.value === 'asc'" name="cheveron-up" class="w-4 h-4"></icon>
+                                <icon v-if="params.field.value === 'name' && params.direction.value === 'desc'" name="cheveron-down" class="w-4 h-4"></icon>
                             </span>
                         </th>
                         <th class="px-6 pt-6 pb-4">
-                            <span class="inline-flex w-full justify-between cursor-pointer" @click="sort('email')">
+                            <span class="inline-flex w-full justify-between cursor-pointer" @click="updateSort('email')">
                                 Email
-                                <icon v-if="params.field === 'email' && params.direction === 'asc'" name="cheveron-up" class="w-4 h-4"></icon>
-                                <icon v-if="params.field === 'email' && params.direction === 'desc'" name="cheveron-down" class="w-4 h-4"></icon>
+                                <icon v-if="params.field.value === 'email' && params.direction.value === 'asc'" name="cheveron-up" class="w-4 h-4"></icon>
+                                <icon v-if="params.field.value === 'email' && params.direction.value === 'desc'" name="cheveron-down" class="w-4 h-4"></icon>
                             </span>
                         </th>
                         <th class="px-6 pt-6 pb-4">
-                            <span class="inline-flex w-full justify-between cursor-pointer" @click="sort('role')">
+                            <span class="inline-flex w-full justify-between cursor-pointer" @click="updateSort('role')">
                                 Jogosultság
-                                <icon v-if="params.field === 'role' && params.direction === 'asc'" name="cheveron-up" class="w-4 h-4"></icon>
-                                <icon v-if="params.field === 'role' && params.direction === 'desc'" name="cheveron-down" class="w-4 h-4"></icon>
+                                <icon v-if="params.field.value === 'role' && params.direction.value === 'asc'" name="cheveron-up" class="w-4 h-4"></icon>
+                                <icon v-if="params.field.value === 'role' && params.direction.value === 'desc'" name="cheveron-down" class="w-4 h-4"></icon>
                             </span>
                         </th>
                         <th class="px-6 pt-6 pb-4">
-                            <span class="inline-flex w-full justify-between cursor-pointer" @click="sort('created_at')">
+                            <span class="inline-flex w-full justify-between cursor-pointer" @click="updateSort('created_at')">
                                 Létrehozva
-                                <icon v-if="params.field === 'created_at' && params.direction === 'asc'" name="cheveron-up" class="w-4 h-4"></icon>
-                                <icon v-if="params.field === 'created_at' && params.direction === 'desc'" name="cheveron-down" class="w-4 h-4"></icon>
+                                <icon v-if="params.field.value === 'created_at' && params.direction.value === 'asc'" name="cheveron-up" class="w-4 h-4"></icon>
+                                <icon v-if="params.field.value === 'created_at' && params.direction.value === 'desc'" name="cheveron-down" class="w-4 h-4"></icon>
                             </span>
                         </th>
                     </tr>
@@ -73,7 +68,7 @@
                             </inertia-link>
                         </td>
                     </tr>
-                    <tr v-if="users.data.length === 0">
+                    <tr v-if="users.data.length.value === 0">
                         <td class="border-t px-6 py-2" colspan="4">Nem található felhasználó</td>
                     </tr>
                 </table>
@@ -84,50 +79,44 @@
 </template>
 
 <script>
+import BaseSearch from "@/Pages/Admin/Components/BaseSearch";
 import AdminLayout from "@/Layouts/AdminLayout";
-import pickBy from 'lodash/pickBy'
 import JetButton from "@/Jetstream/Button";
 import Icon from '@/Shared/Icon'
-import {throttle} from "lodash";
 import Pagination from '@/Shared/Pagination'
+import { getParams, getWatch } from '@/Use/useQuery';
 
 export default {
     components: {
         Icon,
         JetButton,
         AdminLayout,
-        Pagination
+        Pagination,
+        BaseSearch,
     },
     props: {
         filters: Object,
         users: Object,
     },
-    data() {
-        return {
-            params: {
-                search: this.filters.search,
-                field: this.filters.field,
-                direction: this.filters.direction,
-            },
-        };
-    },
-    methods: {
-        sort(field) {
-            this.params.field = field;
-            this.params.direction = this.params.direction === 'asc' ? 'desc' : 'asc';
-        },
-        reset() {
-            this.params.search = '';
+    setup(props) {
+        const params = getParams(props);
+
+        function updateSearch(value) {
+            params.search.value = value;
         }
-    },
-    watch: {
-        params: {
-            handler: throttle(function () {
-                let params = pickBy(this.params);
-                this.$inertia.get(this.route('admin:users.index'), params, { replace: true, preserveState: true });
-            }, 150),
-            deep: true,
-        },
+
+        function updateSort(field) {
+            params.field.value = field;
+            params.direction.value = params.direction.value === 'asc' ? 'desc' : 'asc';
+        }
+
+        getWatch(params, 'admin:users.index');
+
+        return {
+            params,
+            updateSearch,
+            updateSort,
+        }
     },
 };
 </script>

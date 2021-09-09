@@ -68,6 +68,9 @@
 </template>
 
 <script>
+import { ref } from 'vue';
+import { useForm } from '@inertiajs/inertia-vue3'
+import { Inertia } from "@inertiajs/inertia";
 import AdminLayout from "@/Layouts/AdminLayout";
 import JetButton from "@/Jetstream/Button";
 import JetDangerButton from '@/Jetstream/DangerButton'
@@ -92,24 +95,30 @@ export default {
         editUser: Object,
         roles: Array,
     },
-    data() {
+    setup(props) {
+        const confirmModalShow = ref(false);
+
+        const form = useForm({
+            _method: 'PUT',
+            name: props.editUser.name,
+            email: props.editUser.email,
+            role: props.editUser.role,
+        })
+
+        function update() {
+            form.put(route('admin:users.update', props.editUser.id))
+        }
+
+        function deleteUser() {
+            Inertia.delete(this.route('admin:users.destroy', props.editUser.id))
+        }
+
         return {
-            confirmModalShow: false,
-            form: this.$inertia.form({
-                _method: 'PUT',
-                name: this.editUser.name,
-                email: this.editUser.email,
-                role: this.editUser.role,
-            }),
-        };
+            confirmModalShow,
+            form,
+            update,
+            deleteUser,
+        }
     },
-    methods: {
-        update() {
-            this.form.put(this.route('admin:users.update', this.editUser.id))
-        },
-        deleteUser() {
-            this.$inertia.delete(this.route('admin:users.destroy', this.editUser.id))
-        },
-    }
 }
 </script>

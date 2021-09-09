@@ -11,7 +11,7 @@
                         <SwitchLabel class="mr-4">Enable notifications</SwitchLabel>
                         <Switch
                             v-model="enabled"
-                            :class="enabled ? 'bg-blue-700' : 'bg-blue-400'"
+                            :class="enabled ? 'bg-blue-500' : 'bg-gray-400'"
                             class="relative inline-flex items-center w-14 h-6 rounded-full border-2 border-transparent cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
                         >
                             <span class="sr-only">Use setting</span>
@@ -75,19 +75,20 @@
 
 <script>
 import AdminLayout from '@/Layouts/AdminLayout'
-import {ref} from 'vue'
+import { ref } from 'vue'
 import {
     Listbox,
     ListboxButton,
     ListboxOptions,
     ListboxOption,
+    ListboxLabel,
     Switch, SwitchGroup, SwitchLabel
 } from '@headlessui/vue'
 import {CheckIcon, SelectorIcon} from '@heroicons/vue/solid'
 
 export default {
     components: {
-        AdminLayout, Listbox, ListboxButton, ListboxOptions, ListboxOption, Switch, SwitchGroup, SwitchLabel, CheckIcon, SelectorIcon,
+        AdminLayout, Listbox, ListboxButton, ListboxOptions, ListboxOption, ListboxLabel, Switch, SwitchGroup, SwitchLabel, CheckIcon, SelectorIcon,
     },
     setup() {
         const people = [

@@ -1,9 +1,7 @@
 <?php
 
-use App\Http\Controllers\Admin\UsersController;
-use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,10 +18,10 @@ Route::get('/', function () {
     return Inertia::render('Site/Home');
 })->name('home');
 
-//jetstream routes
-Route::prefix('')->group(base_path('routes/jetstream.php'));
+// Jetstream routes
+Route::group([], base_path('routes/jetstream.php'));
 
-//admin
+// Admin auth
 Route::middleware(['auth:sanctum', 'verified', 'role:admin'])
     ->prefix('admin')
     ->name('admin:')

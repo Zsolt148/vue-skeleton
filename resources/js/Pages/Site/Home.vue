@@ -13,13 +13,13 @@
                         (Vue.JS, Inertia.JS, Laravel and TailwindCSS)
                     </div>
                     <div class="flex justify-center">
-                        <inertia-link href="#">
+                        <inertia-link :href="route('admin:dashboard')">
                             <jet-button>
                                 Hírek
                             </jet-button>
                         </inertia-link>
                         <p class="text-sm text-left text-gray-600 dark:text-gray-300 ml-6">Lorem<br>
-                            <inertia-link href="#" class="inline-flex items-center font-semibold text-blue-700 dark:text-blue-500 md:mb-2 lg:mb-0 hover:text-blue-400 ">
+                            <inertia-link :href="route('admin:dashboard')" class="inline-flex items-center font-semibold text-blue-700 dark:text-blue-500 md:mb-2 lg:mb-0 hover:text-blue-400 ">
                                 Részletek
                                 <svg class="w-4 h-4 ml-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
                                     <path fill="none" d="M0 0h24v24H0z"></path>
