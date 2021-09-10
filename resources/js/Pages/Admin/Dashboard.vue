@@ -14,7 +14,6 @@
                             :class="enabled ? 'bg-blue-500' : 'bg-gray-400'"
                             class="relative inline-flex items-center w-14 h-6 rounded-full border-2 border-transparent cursor-pointer transition-colors ease-in-out duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
                         >
-                            <span class="sr-only">Use setting</span>
                             <span
                                 :class="enabled ? 'translate-x-9' : 'translate-x-0'"
                                 class="inline-block w-4 h-4 transform bg-white rounded-full pointer-events-none shadow-lg transform ring-0 transition ease-in-out duration-200"
@@ -75,7 +74,7 @@
 
 <script>
 import AdminLayout from '@/Layouts/AdminLayout'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import {
     Listbox,
     ListboxButton,
@@ -98,9 +97,19 @@ export default {
             {id: 4, name: 'Benedict Kessler', unavailable: true},
             {id: 5, name: 'Katelyn Rohan', unavailable: false},
         ]
-        const selectedPerson = ref(people[0])
 
-        const enabled = ref(false)
+        const selectedPerson = ref(people[0]);
+
+        const enabled = ref(false);
+
+        watch(selectedPerson, function () {
+            console.log(selectedPerson.value);
+        })
+
+        watch(enabled, function () {
+            console.log(enabled.value);
+            return enabled.value;
+        })
 
         return {
             people,
@@ -108,20 +117,5 @@ export default {
             enabled
         }
     },
-
-    watch: {
-        selectedPerson() {
-            console.log(this.selectedPerson);
-            return this.selectedPerson;
-        },
-        enabled() {
-          console.log(this.enabled);
-          return this.enabled;
-        }
-    },
-
-    methods: {
-
-    }
 }
 </script>

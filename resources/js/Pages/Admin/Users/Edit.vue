@@ -110,7 +110,7 @@ export default {
         }
 
         function deleteUser() {
-            Inertia.delete(this.route('admin:users.destroy', props.editUser.id))
+            Inertia.delete(route('admin:users.destroy', props.editUser.id))
         }
 
         return {
