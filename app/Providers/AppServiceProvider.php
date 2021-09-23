@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\ServiceProvider;
 use Inertia\Inertia;
+use Laravel\Jetstream\Jetstream;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -16,6 +17,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        Jetstream::ignoreRoutes();
         Inertia::share('flash', function () {
             return [
                 'error'   => Session::get('error'),
