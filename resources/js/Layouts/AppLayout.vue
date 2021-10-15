@@ -8,9 +8,9 @@
                         <div class="flex">
                             <!-- Logo -->
                             <div class="flex-shrink-0 flex items-center">
-                                <inertia-link :href="route('home')">
+                                <Link :href="route('home')">
                                     <span class="font-bold text-blue-600 dark:text-blue-500 text-2xl">mszuosz.hu</span>
-                                </inertia-link>
+                                </Link>
                             </div>
 
                             <!-- Navigation Links -->
@@ -20,6 +20,9 @@
                                 </jet-nav-link>
                                 <jet-nav-link href="#" :active="null">
                                     Teszt
+                                </jet-nav-link>
+                                <jet-nav-link :href="route('login')" :active="null">
+                                    Login
                                 </jet-nav-link>
                             </div>
                         </div>
@@ -134,42 +137,45 @@
 </template>
 
 <script>
-    import JetApplicationMark from '@/Jetstream/ApplicationMark'
-    import JetBanner from '@/Jetstream/Banner'
-    import JetDropdown from '@/Jetstream/Dropdown'
-    import JetDropdownLink from '@/Jetstream/DropdownLink'
-    import JetNavLink from '@/Jetstream/NavLink'
-    import JetResponsiveNavLink from '@/Jetstream/ResponsiveNavLink'
+import JetApplicationMark from '@/Jetstream/ApplicationMark'
+import JetBanner from '@/Jetstream/Banner'
+import JetDropdown from '@/Jetstream/Dropdown'
+import JetDropdownLink from '@/Jetstream/DropdownLink'
+import JetNavLink from '@/Jetstream/NavLink'
+import JetResponsiveNavLink from '@/Jetstream/ResponsiveNavLink'
+import { Link } from '@inertiajs/inertia-vue3'
 
-    export default {
-        components: {
-            JetApplicationMark,
-            JetBanner,
-            JetDropdown,
-            JetDropdownLink,
-            JetNavLink,
-            JetResponsiveNavLink,
+
+export default {
+    components: {
+        JetApplicationMark,
+        JetBanner,
+        JetDropdown,
+        JetDropdownLink,
+        JetNavLink,
+        JetResponsiveNavLink,
+        Link
+    },
+
+    mounted() {
+        this.cookieAccepted = localStorage.getItem('cookie_accepted') == 'true' ? true : false;
+    },
+
+    data() {
+        return {
+            showingNavigationDropdown: false,
+            cookieAccepted: false,
+        }
+    },
+
+    methods: {
+        logout() {
+            this.$inertia.post(route('logout'));
         },
-
-        mounted() {
-            this.cookieAccepted = localStorage.getItem('cookie_accepted') == 'true' ? true : false;
-        },
-
-        data() {
-            return {
-                showingNavigationDropdown: false,
-                cookieAccepted: false,
-            }
-        },
-
-        methods: {
-            logout() {
-                this.$inertia.post(route('logout'));
-            },
-            acceptCookie() {
-                localStorage.setItem('cookie_accepted', true);
-                this.cookieAccepted = true;
-            }
+        acceptCookie() {
+            localStorage.setItem('cookie_accepted', true);
+            this.cookieAccepted = true;
         }
     }
+}
 </script>

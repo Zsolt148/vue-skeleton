@@ -1,4 +1,6 @@
 <template>
+    <Head title="Users" />
+
     <admin-layout>
         <template #header>
             Felhasználók
@@ -43,29 +45,29 @@
                     </tr>
                     <tr v-for="user in users.data" :key="user.id" class="hover:bg-gray-100 dark:hover:bg-gray-800 focus-within:bg-gray-100">
                         <td class="border-t dark:border-gray-400">
-                            <inertia-link class="px-6 py-2 flex items-center focus:text-indigo-500" :href="route('admin:users.edit', user.id)">
+                            <Link class="px-6 py-2 flex items-center focus:text-indigo-500" :href="route('admin:users.edit', user.id)">
                                 {{ user.name }}
-                            </inertia-link>
+                            </Link>
                         </td>
                         <td class="border-t dark:border-gray-400">
-                            <inertia-link class="px-6 py-2 flex items-center" :href="route('admin:users.edit', user.id)" tabindex="-1">
+                            <Link class="px-6 py-2 flex items-center" :href="route('admin:users.edit', user.id)" tabindex="-1">
                                 {{ user.email }}
-                            </inertia-link>
+                            </Link>
                         </td>
                         <td class="border-t dark:border-gray-400">
-                            <inertia-link class="px-6 py-2 flex items-center" :href="route('admin:users.edit', user.id)" tabindex="-1">
+                            <Link class="px-6 py-2 flex items-center" :href="route('admin:users.edit', user.id)" tabindex="-1">
                                 {{ user.role_val }}
-                            </inertia-link>
+                            </Link>
                         </td>
                         <td class="border-t dark:border-gray-400">
-                            <inertia-link class="px-6 py-2 flex items-center" :href="route('admin:users.edit', user.id)" tabindex="-1">
+                            <Link class="px-6 py-2 flex items-center" :href="route('admin:users.edit', user.id)" tabindex="-1">
                                 {{ user.created_at }}
-                            </inertia-link>
+                            </Link>
                         </td>
                         <td class="border-t w-px dark:border-gray-400">
-                            <inertia-link class="px-4 flex items-center" :href="route('admin:users.edit', user.id)" tabindex="-1">
+                            <Link class="px-4 flex items-center" :href="route('admin:users.edit', user.id)" tabindex="-1">
                                 <icon name="cheveron-right" class="block w-6 h-6 fill-gray-400" />
-                            </inertia-link>
+                            </Link>
                         </td>
                     </tr>
                     <tr v-if="users.data.length.value === 0">
@@ -85,6 +87,7 @@ import JetButton from "@/Jetstream/Button";
 import Icon from '@/Shared/Icon'
 import Pagination from '@/Shared/Pagination'
 import { getParams, getWatch } from '@/Use/useQuery';
+import { Link, Head } from '@inertiajs/inertia-vue3'
 
 export default {
     components: {
@@ -93,6 +96,8 @@ export default {
         AdminLayout,
         Pagination,
         BaseSearch,
+        Link,
+        Head
     },
     props: {
         filters: Object,

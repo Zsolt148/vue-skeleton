@@ -5,7 +5,7 @@
                @input="search"
                v-model="searchTerm"
                />
-        <jet-button @click="reset">
+        <jet-button size="sm" @click="reset">
             Törlés
         </jet-button>
     </div>

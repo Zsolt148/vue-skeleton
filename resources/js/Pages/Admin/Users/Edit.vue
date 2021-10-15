@@ -5,7 +5,7 @@
         </template>
         <div>
             <h1 class="mb-8 font-bold text-3xl">
-                <inertia-link class="text-indigo-400 hover:text-indigo-600" :href="route('admin:users.index')">Felhasználók</inertia-link>
+                <Link class="text-indigo-400 hover:text-indigo-600" :href="route('admin:users.index')">Felhasználók</Link>
                 <span class="text-indigo-400 font-medium">/</span>
                 {{ form.name }}
             </h1>
@@ -79,6 +79,7 @@ import JetInputError from "@/Jetstream/InputError";
 import JetLabel from "@/Jetstream/Label";
 import JetConfirmationModal from "@/Jetstream/ConfirmationModal";
 import JetSecondaryButton from "@/Jetstream/SecondaryButton";
+import { Link } from '@inertiajs/inertia-vue3'
 
 export default {
     components: {
@@ -90,11 +91,9 @@ export default {
         JetDangerButton,
         JetConfirmationModal,
         JetSecondaryButton,
+        Link
     },
-    props: {
-        editUser: Object,
-        roles: Array,
-    },
+    props: ['editUser', 'roles'],
     setup(props) {
         const confirmModalShow = ref(false);
 

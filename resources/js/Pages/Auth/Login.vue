@@ -29,9 +29,9 @@
             </div>
 
             <div class="flex items-center justify-end mt-4">
-                <inertia-link v-if="canResetPassword" :href="route('password.request')" class="underline text-sm text-gray-600 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white">
+                <Link v-if="canResetPassword" :href="route('password.request')" class="underline text-sm text-gray-600 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white">
                     Forgot your password?
-                </inertia-link>
+                </Link>
 
                 <jet-button class="ml-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
                     Log in
@@ -49,6 +49,8 @@
     import JetCheckbox from '@/Jetstream/Checkbox'
     import JetLabel from '@/Jetstream/Label'
     import JetValidationErrors from '@/Jetstream/ValidationErrors'
+    import { Link } from '@inertiajs/inertia-vue3'
+
 
     export default {
         components: {
@@ -58,7 +60,8 @@
             JetInput,
             JetCheckbox,
             JetLabel,
-            JetValidationErrors
+            JetValidationErrors,
+            Link
         },
 
         props: {
