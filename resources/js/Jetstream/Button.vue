@@ -3,15 +3,16 @@
         <span v-if="srText" class="sr-only">{{ srText }}</span>
         <slot :iconSizeClasses="iconSizeClasses" />
     </component>
-    <button v-else :type="type" :class="classes" @click="handleClick" :disabled="disabled">
-        <span v-if="srText" class="sr-only">{{ srText }}</span>
+    <button v-else :type="type" :class="classes" @click="handleClick" :disabled="disabled || loading">
+        <div v-if="loading" class="btn-spinner mr-2" />
+        <span class="sr-only">{{ srText }}</span>
         <slot :iconSizeClasses="iconSizeClasses" />
     </button>
 </template>
 
 <script>
 import { toRefs, computed } from 'vue'
-import { Link } from '@inertiajs/inertia-vue3'
+import { Link } from "@inertiajs/inertia-vue3";
 
 export default {
     props: {
@@ -60,6 +61,10 @@ export default {
             type: Boolean,
             default: false,
         },
+        loading: {
+            type: Boolean || undefined,
+            default: false,
+        },
     },
 
     emits: ['click'],
@@ -70,7 +75,9 @@ export default {
         const { disabled } = toRefs(props)
 
         const baseClasses = [
-            'inline-flex items-center transition-colors font-medium select-none disabled:opacity-50 disabled:cursor-not-allowed focus:outline-none focus:ring focus:ring-offset-1 focus:ring-offset-white dark:focus:ring-offset-dark-eval-2',
+            'inline-flex items-center font-medium select-none tracking-widest shadow-sm transition' +
+            ' disabled:opacity-50 disabled:cursor-not-allowed ' +
+            'focus:outline-none focus:ring focus:ring-offset-1 focus:ring-opacity-50 focus:ring-offset-white dark:focus:ring-offset-black',
         ]
 
         const variantClasses = (variant) => ({
@@ -92,11 +99,12 @@ export default {
                     'p-1.5': size == 'sm',
                     'p-2': size == 'base',
                     'p-3': size == 'lg',
+                    'border-none shadow-none' : true,
                 }
                 : {
                     'px-2.5 py-1.5 text-sm': size == 'sm',
-                    'px-4 py-2 text-base': size == 'base',
-                    'px-5 py-2 text-xl': size == 'lg',
+                    'px-4 py-2 text-sm': size == 'base',
+                    'px-5 py-2 text-base': size == 'lg',
                 },
             variantClasses(variant),
             {
@@ -125,7 +133,7 @@ export default {
             emit('click')
         }
 
-        const Tag = external ?  'a' : Link
+        const Tag = external ? 'a' : Link
 
         return {
             classes,
